@@ -19,4 +19,5 @@ set expandtab
 
 nnoremap <silent> <C-f> :Files<CR>
 
-source /usr/share/doc/fzf/examples/fzf.vim
+source "/Users/sebastiangoodman/fzf.vim"
+source /opt/homebrew/opt/fzf/plugin/fzf.vim
