@@ -18,6 +18,12 @@ set shiftwidth=2
 set expandtab
 
 nnoremap <silent> <C-f> :Files<CR>
+nnoremap <silent> <Leader>f :Rg<CR>
 
 source "/Users/sebastiangoodman/fzf.vim"
 source /opt/homebrew/opt/fzf/plugin/fzf.vim
+
+syntax on
+set re=0
+
+set clipboard=unnamed
