@@ -35,7 +35,7 @@ call SourceIfExists("/opt/homebrew/opt/fzf/plugin/fzf.vim")
 call SourceIfExists("/usr/share/doc/fzf/examples/fzf.vim")
 call SourceIfExists("/Users/sebastiangoodman/fzf.vim")
 
-# Need to also run the following :
-#   sudo apt-get install fzf
-#   curl -fLo ~/.var/app/io.neovim.nvim/data/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-#   :PlugInstall (within nvim)
+" Need to also run the following :
+"   sudo apt-get install fzf
+"   curl -fLo ~/.var/app/io.neovim.nvim/data/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"   :PlugInstall (within nvim)
