@@ -20,10 +20,11 @@ set expandtab
 nnoremap <silent> <C-f> :Files<CR>
 nnoremap <silent> <Leader>f :Rg<CR>
 
-source "/Users/sebastiangoodman/fzf.vim"
-source /opt/homebrew/opt/fzf/plugin/fzf.vim
+source /usr/share/doc/fzf/examples/fzf.vim
+" source "/Users/sebastiangoodman/fzf.vim"
+" source /opt/homebrew/opt/fzf/plugin/fzf.vim
 
 syntax on
 set re=0
 
-set clipboard=unnamed
+set clipboard=unnamedplus
