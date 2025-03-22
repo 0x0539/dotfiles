@@ -30,7 +30,7 @@ prompt_command() {
   local git_info=$(git_branch)
   
   # Set the PS1
-  PS1="${CYAN}${current_path}${RESET} ${MAGENTA}[${time}]${RESET}${YELLOW}${git_info}${RESET}: "
+  PS1="${MAGENTA}[${time}]${RESET}${YELLOW}${git_info}${RESET} ${WHITE}${current_path}${RESET}: "
 }
 
 # Set the PROMPT_COMMAND to update PS1 before each prompt
