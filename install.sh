@@ -49,10 +49,11 @@ install-linked() {
     echo "Created symbolic link: $link_path -> $source_file"
 }
 
-. install_nvim.sh
-. install_fzf.sh
-. install_rg.sh
-. install_shell_config.sh
-. install_tmux.sh
+. scripts/install_nvim.sh
+. scripts/install_fzf.sh
+. scripts/install_rg.sh
+. scripts/install_shell_config.sh
+. scripts/install_tmux.sh
+. scripts/install_prompt.sh
 
 echo "Setup complete! You can now use nvim and tmux."

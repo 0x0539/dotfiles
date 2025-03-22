@@ -35,3 +35,4 @@ prompt_command() {
 
 # Set the PROMPT_COMMAND to update PS1 before each prompt
 PROMPT_COMMAND=prompt_command
+
