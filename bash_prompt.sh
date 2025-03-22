@@ -5,6 +5,7 @@ GREEN="\[\033[32m\]"
 YELLOW="\[\033[33m\]"
 MAGENTA="\[\033[35m\]"
 RESET="\[\033[0m\]"
+WHITE="\[\033[37m\]"
 
 # Function to get current git branch if in a git repository
 git_branch() {
@@ -30,7 +31,7 @@ prompt_command() {
   local git_info=$(git_branch)
   
   # Set the PS1
-  PS1="${MAGENTA}[${time}]${RESET}${YELLOW}${git_info}${RESET} ${WHITE}${current_path}${RESET}$ "
+  PS1="${MAGENTA}[${time}]${RESET}${YELLOW}${git_info}${RESET} ${CYAN}${current_path}${RESET}${WHITE}$ ${RESET}"
 }
 
 # Set the PROMPT_COMMAND to update PS1 before each prompt

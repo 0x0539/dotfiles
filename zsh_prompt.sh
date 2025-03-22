@@ -4,6 +4,7 @@ CYAN="%F{cyan}"
 GREEN="%F{green}"
 YELLOW="%F{yellow}"
 MAGENTA="%F{magenta}"
+WHITE="%F{white}"
 RESET="%f"
 
 # Need to load the vcs_info system for git information
@@ -29,5 +30,5 @@ format_path() {
 
 # Set the prompt with all required elements
 setopt PROMPT_SUBST
-PROMPT='${MAGENTA}[%D{%I:%M:%S %p}]${RESET}${YELLOW}${vcs_info_msg_0_}${RESET} ${WHITE}$(format_path)${RESET}$ '
+PROMPT='${MAGENTA}[%D{%I:%M:%S %p}]${RESET}${YELLOW}${vcs_info_msg_0_}${RESET} ${CYAN}$(format_path)${RESET}${WHITE}$ ${RESET}'
 
