@@ -29,5 +29,5 @@ format_path() {
 
 # Set the prompt with all required elements
 setopt PROMPT_SUBST
-PROMPT='${MAGENTA}[%D{%I:%M:%S %p}]${RESET}${YELLOW}${vcs_info_msg_0_}${RESET} ${WHITE}$(format_path)${RESET}: '
+PROMPT='${MAGENTA}[%D{%I:%M:%S %p}]${RESET}${YELLOW}${vcs_info_msg_0_}${RESET} ${WHITE}$(format_path)${RESET}$ '
 
