@@ -4,8 +4,8 @@ CYAN="\[\033[36m\]"
 GREEN="\[\033[32m\]"
 YELLOW="\[\033[33m\]"
 MAGENTA="\[\033[35m\]"
-RESET="\[\033[0m\]"
 WHITE="\[\033[37m\]"
+RESET="\[\033[0m\]"
 
 # Function to get current git branch if in a git repository
 git_branch() {

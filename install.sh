@@ -55,5 +55,6 @@ install-linked() {
 . scripts/install_shell_config.sh
 . scripts/install_tmux.sh
 . scripts/install_prompt.sh
+. scripts/install_xclip.sh
 
 echo "Setup complete! You can now use nvim and tmux."
