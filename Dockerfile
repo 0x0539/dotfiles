@@ -17,9 +17,12 @@ RUN apt-get update \
        ripgrep \
        libfuse2 \
        xclip \
-       tmux \
        dos2unix \
     && rm -rf /var/lib/apt/lists/*
+
+# Pre-install vim-plug to ensure plug.vim is loaded to the correct directory
+RUN curl -fLo /root/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # Pre-install fzf binary to avoid plugin post-install scripts needing FUSE or user input
 RUN git clone --depth 1 https://github.com/junegunn/fzf.git /root/.fzf \
