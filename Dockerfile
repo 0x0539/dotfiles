@@ -17,8 +17,11 @@ RUN apt-get update \
        ripgrep \
        libfuse2 \
        xclip \
+       tmux \
        dos2unix \
     && rm -rf /var/lib/apt/lists/*
+
+ENV PATH="/root/.local/bin:${PATH}"
 
 # Pre-install vim-plug to ensure plug.vim is loaded to the correct directory
 RUN curl -fLo /root/.local/share/nvim/site/autoload/plug.vim --create-dirs \
