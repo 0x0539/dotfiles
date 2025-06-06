@@ -12,36 +12,55 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        curl \
        git \
-       sudo \
        ca-certificates \
+       file \
        ripgrep \
        libfuse2 \
        xclip \
        tmux \
+       neovim \
        dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
-ENV PATH="/root/.local/bin:${PATH}"
+# Install latest fzf binary (≥ 0.56.0) system-wide
+RUN git clone --depth 1 https://github.com/junegunn/fzf.git /opt/fzf && \
+    /opt/fzf/install --bin --no-update-rc --no-key-bindings --no-completion && \
+    mv /opt/fzf/bin/fzf /usr/local/bin/ && \
+    rm -rf /opt/fzf
 
-# Pre-install vim-plug to ensure plug.vim is loaded to the correct directory
-RUN curl -fLo /root/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+# Create a new user (named `developer`, change if desired)
+ARG USERNAME=developer
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN groupadd --gid $USER_GID $USERNAME && \
+    useradd --uid $USER_UID --gid $USER_GID --create-home --shell /bin/bash $USERNAME
+
+# Switch to new user for rust install
+USER $USERNAME
+ENV USER=$USERNAME
+ENV HOME=/home/$USERNAME
+
+ENV SHELL_CONFIG=$HOME/.bashrc
+
+# Install plug.vim
+RUN curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-# Pre-install fzf binary to avoid plugin post-install scripts needing FUSE or user input
-RUN git clone --depth 1 https://github.com/junegunn/fzf.git /root/.fzf \
-    && /root/.fzf/install --bin --no-update-rc --no-key-bindings --no-completion \
-    && mv /root/.fzf/bin/fzf /usr/local/bin \
-    && rm -rf /root/.fzf
-
 # Copy the local dotfiles repo into the container
-COPY . /opt/dotfiles
+COPY --chown=$USERNAME:$USERNAME . /opt/dotfiles
 
 # Convert all shell scripts to Unix line endings
 RUN find /opt/dotfiles -type f -exec dos2unix {} +
 
-# Run the install script
-RUN cd /opt/dotfiles \
-    && /bin/bash /opt/dotfiles/install.sh
+RUN mkdir -p ~/.config/nvim && \
+    ln -s /opt/dotfiles/init.vim $HOME/.config/nvim/init.vim
+
+RUN nvim +PlugInstall +qall
+RUN /bin/bash /opt/dotfiles/scripts/install_shell_config.sh
+
+# Link .tmux.conf
+RUN ln -s /opt/dotfiles/tmux.conf $HOME/.tmux.conf
 
 # Launch an interactive Bash shell by default
 CMD ["/bin/bash"]
