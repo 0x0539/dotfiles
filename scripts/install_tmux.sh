@@ -14,7 +14,7 @@ if ! command -v tmux &> /dev/null; then
         echo "Installing tmux from AppImage..."
         
         # Check if FUSE is installed
-        sudo apt-get install libfuse2
+        sudo apt-get install -y libfuse2
         
         # Create directory for AppImages
         mkdir -p "$HOME/.local/bin"

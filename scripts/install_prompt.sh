@@ -68,7 +68,3 @@ echo "$END_MARKER" >> "$SHELL_CONFIG"
 echo "Installation complete!"
 echo "To apply changes, run: source \"$SHELL_CONFIG\""
 
-# Clean up
-rm -rf "$TEMP_DIR"
-
-
