@@ -26,11 +26,12 @@ return {
       },
       mappings = {
         n = {
-          -- Fuzzy finding via Telescope (ships with AstroNvim).
+          -- Fuzzy finding via snacks.nvim's picker (AstroNvim's default finder;
+          -- the template no longer ships Telescope).
           -- These mirror the old vim-plug/fzf muscle memory; delete if unwanted.
           -- AstroNvim's native maps also work: <Leader>ff (files), <Leader>fw (grep in files).
-          ["<C-f>"] = { function() require("telescope.builtin").find_files() end, desc = "Find files" },
-          ["<C-g>"] = { function() require("telescope.builtin").live_grep() end, desc = "Live grep (find in files)" },
+          ["<C-f>"] = { function() require("snacks").picker.files() end, desc = "Find files" },
+          ["<C-g>"] = { function() require("snacks").picker.grep() end, desc = "Live grep (find in files)" },
         },
       },
     },
