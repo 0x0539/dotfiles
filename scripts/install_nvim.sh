@@ -61,7 +61,29 @@ fi
 mkdir -p "$NVIM_CONFIG_DIR/lua/plugins"
 install-linked nvim/lua/plugins/dotfiles.lua "$NVIM_CONFIG_DIR/lua/plugins/dotfiles.lua"
 
-echo "Syncing plugins with lazy.nvim..."
-# Non-fatal: a sync hiccup shouldn't abort the rest of the install (set -e).
-nvim --headless "+Lazy! sync" +qa \
-    || echo "WARNING: lazy.nvim sync reported an error. Open nvim and run :Lazy sync to retry."
+# Pin plugin versions by symlinking our lockfile over AstroNvim's. lazy.nvim
+# writes the lockfile with io.open(path, "wb") -- an in-place write, not an
+# atomic rename -- so the symlink survives and updates land in this repo,
+# ready to commit. The AstroNvim template ships its own lazy-lock.json, so this
+# must run AFTER the clone above; install-linked removes the existing file.
+if [ -f nvim/lazy-lock.json ]; then
+    install-linked nvim/lazy-lock.json "$NVIM_CONFIG_DIR/lazy-lock.json"
+else
+    echo "NOTE: nvim/lazy-lock.json not in the repo yet -- plugin versions will"
+    echo "      not be pinned. After this install, copy the generated lockfile in:"
+    echo "        cp \"$NVIM_CONFIG_DIR/lazy-lock.json\" nvim/lazy-lock.json"
+fi
+
+# Install plugins at the PINNED versions.
+#   install  -- clones plugins missing from the spec (`restore` skips these: it
+#               filters on `plugin._.installed`, so it only touches what exists)
+#   restore  -- checks every plugin out to the commit in lazy-lock.json
+# Deliberately NOT `Lazy! sync`, which runs `update` and would drag every plugin
+# to latest, silently defeating the lockfile. Upgrading is a separate, manual
+# act: run `:Lazy sync` yourself, then commit the changed nvim/lazy-lock.json.
+echo "Installing plugins with lazy.nvim (pinned to nvim/lazy-lock.json)..."
+# Non-fatal: a hiccup here shouldn't abort the rest of the install (set -e).
+nvim --headless "+Lazy! install" +qa \
+    || echo "WARNING: lazy.nvim install reported an error. Open nvim and run :Lazy install to retry."
+nvim --headless "+Lazy! restore" +qa \
+    || echo "WARNING: lazy.nvim restore reported an error. Open nvim and run :Lazy restore to retry."

@@ -49,12 +49,20 @@ install-linked() {
     echo "Created symbolic link: $link_path -> $source_file"
 }
 
-. scripts/install_nvim.sh
+# NOTE ON ORDER: install_nvim.sh runs LAST because it ends by launching nvim to
+# install plugins, and that step wants the external tools already present:
+#   fzf   -- fzf-lua shells out to the fzf binary
+#   rg    -- fzf-lua's grep_project, and AstroNvim's <Leader>fw
+#   xclip -- our `clipboard = "unnamedplus"` option needs it on Linux
+# These scripts are sourced (`.`), not executed, so the `export PATH=...` in
+# install_fzf.sh carries into the nvim step -- a freshly installed fzf is on
+# PATH by the time lazy.nvim runs, without re-sourcing the shell config.
 . scripts/install_fzf.sh
 . scripts/install_rg.sh
+. scripts/install_xclip.sh
 . scripts/install_shell_config.sh
 . scripts/install_tmux.sh
 . scripts/install_prompt.sh
-. scripts/install_xclip.sh
+. scripts/install_nvim.sh
 
 echo "Setup complete! You can now use nvim and tmux."
